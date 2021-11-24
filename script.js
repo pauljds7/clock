@@ -61,14 +61,16 @@ function update() {
     let min = date.getMinutes();
     let s = date.getSeconds();
     let milliS = date.getMilliseconds();
+    let sMilliS = Math.round(s*10 + milliS/ 100) / 10;
 
     /*Logic for clock app */
     //Parsing current time for output
     let parsedVal = (val < 10) ? "0" + val : val;
     let parsedMin = (min < 10) ? "0" + min : min;
     let parsedS = (s < 10) ? "0" + s : s;
-    let parsedMilliS = (milliS < 10) ? '00' + milliS : ((milliS<100) ? '0' + milliS : milliS)
-    let time = parsedVal + ":" + parsedMin + ":" + parsedS +'.' + parsedMilliS;
+    let parsedMilliS = (milliS < 10) ? '00' + milliS : ((milliS<100) ? '0' + milliS : milliS);
+    let parsedSMilliS = (sMilliS % 1.0 == 0) ? sMilliS+'.0' : sMilliS;
+    let time = parsedVal + ":" + parsedMin + ":" + parsedSMilliS;
     clockDiv.innerText = time;
 
 }
