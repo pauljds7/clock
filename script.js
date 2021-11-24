@@ -51,7 +51,7 @@ pomodoroBtn.addEventListener('click',
 //Time interval for updates
 const intervalMs = 100;
 //Divs for the tabs
-const clockDiv = document.getElementById('clock')
+const clockDiv = document.getElementById('clock-item')
 
 //update functions that updates all the apps
 function update() {
@@ -70,7 +70,9 @@ function update() {
     let parsedMilliS = (milliS < 10) ? '00' + milliS : ((milliS<100) ? '0' + milliS : milliS)
     let time = parsedVal + ":" + parsedMin + ":" + parsedS +'.' + parsedMilliS;
     clockDiv.innerText = time;
-    console.log('Update');
+
+
+    //Update continuation
     setTimeout(update, intervalMs);
 }
 

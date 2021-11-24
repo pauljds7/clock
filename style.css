@@ -64,3 +64,15 @@ body {
 .content {
     display: none;
 }
+
+.content-item {
+    width: 70vw;
+    height: 40vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 5rem;
+}
