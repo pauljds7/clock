@@ -76,3 +76,21 @@ body {
 
     font-size: 5rem;
 }
+
+#timer-btn-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.timer-btn {
+    border: none;
+    color: var(--secondary-txt-color);
+    background-color: var(--main-bg-color);
+
+    font-size: 1.6rem;
+}
+
+.timer-btn:hover {
+    background-color: var(--second-bg-color);
+}

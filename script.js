@@ -52,6 +52,25 @@ pomodoroBtn.addEventListener('click',
 const intervalMs = 100;
 //Divs for the tabs
 const clockDiv = document.getElementById('clock-item')
+const timerDiv = document.getElementById('timer-item')
+
+//Custom app states
+let timerRunning = false;
+//Custom app values
+let startDate = null;
+let lastTimerTime = 0;
+//Listeners for custom app buttons
+document.getElementById('timer-start').addEventListener('click',
+    () => {
+        timerRunning = true;
+        startDate = new Date();
+    }
+);
+document.getElementById('timer-stop').addEventListener('click',
+    () => {
+        timerRunning = false;
+    }
+);
 
 //update functions that updates all the apps
 function update() {
@@ -73,6 +92,28 @@ function update() {
     let time = parsedVal + ":" + parsedMin + ":" + parsedSMilliS;
     clockDiv.innerText = time;
 
+    /*Logc for timer app */
+    //Different logic for running and not running timer
+    let showTimerTime = lastTimerTime;
+    if (timerRunning) {
+        showTimerTime = date - startDate;
+        lastTimerTime = showTimerTime;
+    }
+    //Parse time difference
+    let timerSeconds = Math.floor(showTimerTime/100) / 10;
+    let timerMinutes = Math.floor(timerSeconds/60);
+    let timerHours = Math.floor(timerMinutes/60);
+    let timerTime = null;
+    let parsedTimerSeconds = (timerSeconds % 1 ==0) ? timerSeconds%60 + '.0':((timerSeconds*10)%600)/10;
+    let parsedTimerMinutes = timerMinutes % 60
+    if (timerHours ==0  && timerMinutes == 0) {
+        timerTime = '0:' + parsedTimerSeconds;
+    } else if (timerHours == 0) {
+        timerTime = parsedTimerMinutes + ':' + parsedTimerSeconds
+    } else{
+        timerTime = timerHours + ':' + parsedTimerMinutes + ':' + parsedTimerSeconds
+    }
+    timerDiv.innerText = timerTime;
 }
 
 let updateId = setInterval(update, intervalMs);
