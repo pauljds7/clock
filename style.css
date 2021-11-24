@@ -1,0 +1,66 @@
+/*  
+    Color palette:
+    6E2594 : darkish purple,
+    ECD444 : warmish yeallow,
+    808080 : neutral gray
+    000000 : cool black
+    FFFFFF : white
+*/
+
+:root {
+    --main-txt-color: #ECD444;
+    --secondary-txt-color: #FFFFFF;
+    --main-bg-color: #000000;
+    --second-bg-color: #6E2594;
+    --outline-color: #808080;
+}
+html {
+    font-size: 100%;
+}
+
+body {
+    color: var(--main-txt-color);
+    background-color: var(--main-bg-color);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#tab {
+    border: 1px solid;
+    border-color: var(--outline-color);
+
+    height: 8vh;
+    width: 100vw;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.tab-btn {
+    border: none;
+    border-radius: 2px;
+    color: var(--secondary-txt-color);
+    background-color: var(--main-bg-color);
+    font-size: 1.6rem;
+    
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+}
+
+.tab-btn:hover {
+    color: var(--main-txt-color);
+    background-color: var(--second-bg-color);
+}
+
+.tab-btn.active {
+    color: var(--main-txt-color);
+    background-color: var(--second-bg-color);
+}
+
+.content {
+    display: none;
+}
