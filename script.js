@@ -71,9 +71,6 @@ function update() {
     let time = parsedVal + ":" + parsedMin + ":" + parsedS +'.' + parsedMilliS;
     clockDiv.innerText = time;
 
-
-    //Update continuation
-    setTimeout(update, intervalMs);
 }
 
-update()
+let updateId = setInterval(update, intervalMs);
