@@ -73,16 +73,14 @@ document.getElementById('timer-stop').addEventListener('click',
 );
 
 //update functions that updates all the apps
-function update() {
-    //Get current time
-    let date = new Date();
+//Updatel logic for clock
+function updateClock(date){;
     let val = date.getHours();
     let min = date.getMinutes();
     let s = date.getSeconds();
     let milliS = date.getMilliseconds();
     let sMilliS = Math.round(s*10 + milliS/ 100) / 10;
-
-    /*Logic for clock app */
+    
     //Parsing current time for output
     let parsedVal = (val < 10) ? "0" + val : val;
     let parsedMin = (min < 10) ? "0" + min : min;
@@ -91,9 +89,9 @@ function update() {
     let parsedSMilliS = (sMilliS % 1.0 == 0) ? sMilliS+'.0' : sMilliS;
     let time = parsedVal + ":" + parsedMin + ":" + parsedSMilliS;
     clockDiv.innerText = time;
-
-    /*Logc for timer app */
-    //Different logic for running and not running timer
+}
+//Update logic for timer
+function updateTimer(date) {
     let showTimerTime = lastTimerTime;
     if (timerRunning) {
         showTimerTime = date - startDate;
@@ -114,6 +112,17 @@ function update() {
         timerTime = timerHours + ':' + parsedTimerMinutes + ':' + parsedTimerSeconds
     }
     timerDiv.innerText = timerTime;
+}
+//Update logic for stopwatch app
+function updateStopwatch(date) {
+    
+}
+function update() {
+    //Get current time
+    let date = new Date();
+
+    updateClock(date);
+    updateTimer(date);
 }
 
 let updateId = setInterval(update, intervalMs);
