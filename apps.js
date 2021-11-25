@@ -5,20 +5,38 @@
 //Time interval for updates, in Milli seconds
 const intervalMs = 100;
 //Divs for the tabs
-const clockDiv = document.getElementById('clock-item')
-const timerDiv = document.getElementById('timer-item')
-const stopWatchDiv = document.getElementById('stopwatch-item')
+const clockDiv = document.getElementById('clock-item');
+const timerDiv = document.getElementById('timer-item');
+const stopWatchDiv = document.getElementById('stopwatch-item');
+const pomodoroDiv = document.getElementById('pomodoro-item');
 
 //Custom app states
 let timerRunning = false;
 let stopwatchRunning = false;
 let pomodoroRunning = false;
 //Custom app values
+//Timer
 let timerStartDate = null;
 let lastTimerTime = 0;
+//Stopwatch
 let stopwatchStartDate = null;
 const defaultStopwatchVal = 120000
 let stopwatchLength = defaultStopwatchVal;
+//Pomodoro timer
+//Cycle of work, rest, work, rest, work, rest, work, long rest
+const pomodoroCycle = [
+    10000,
+    5000,
+    10000,
+    5000,
+    10000,
+    5000,
+    10000,
+    20000
+];
+let pomodoroCurrentStep = 0;
+let pomodoroCurrentTime = pomodoroCycle[pomodoroCurrentStep];
+let pomodoroLastDate = null;
 
 /*
     Listeners for custom app buttons
@@ -80,6 +98,24 @@ document.getElementById('stopwatch-sub-minute').addEventListener('click',
         if (stopwatchLength <= 0) {
             stopwatchLength = 0;
         }
+    }
+);
+document.getElementById('pomodoro-start').addEventListener('click',
+    () => {
+        pomodoroRunning = true;
+        pomodoroLastDate = new Date();
+    }
+);
+document.getElementById('pomodoro-stop').addEventListener('click',
+    () => {
+        pomodoroRunning= false;
+    }
+);
+document.getElementById('pomodoro-reset').addEventListener('click',
+    () => {
+        pomodoroRunning = false;
+        pomodoroCurrentStep = 0;
+        pomodoroCurrentTime = pomodoroCycle[pomodoroCurrentStep];
     }
 );
 //----------------------------------------
@@ -144,6 +180,21 @@ function updateStopwatch(date) {
     }
     renderTime(stopWatchDiv, stopwatchLength)
 }
+//Update logic for pomodoro timer app
+function updatePomodoro(date) {
+    if (pomodoroRunning) {
+        pomodoroCurrentTime -= date - pomodoroLastDate;
+        pomodoroLastDate = date;
+        if (pomodoroCurrentTime <= 0){
+            pomodoroCurrentStep = (pomodoroCurrentStep + 1) % pomodoroCycle.length;
+            pomodoroCurrentTime = pomodoroCycle[pomodoroCurrentStep];
+            //Play sound after each stage completion
+            let audio = new Audio('intro-logo.wav');
+            audio.play();
+        }
+    }
+    renderTime(pomodoroDiv, pomodoroCurrentTime)
+}
 
 //general update that updates all the apps
 function update() {
@@ -153,6 +204,7 @@ function update() {
     updateClock(date);
     updateTimer(date);
     updateStopwatch(date);
+    updatePomodoro(date);
 }
 //Launch update
 let updateId = setInterval(update, intervalMs);
