@@ -94,3 +94,8 @@ body {
 .timer-btn:hover {
     background-color: var(--second-bg-color);
 }
+
+#stopwatch-increments {
+    display: flex;
+    justify-content: center;
+}
