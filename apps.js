@@ -1,50 +1,4 @@
 /*
-    Code to make tabs work
-*/
-//Deactivates all tabs
-function deactivateAll() {
-    let allContent = document.getElementsByClassName('content');
-    for (let i = 0; i <allContent.length; i++){
-        allContent[i].style.display = 'none';
-    }
-}
-//Activates single tab given by name
-function activate(name) {
-    let clockType = document.getElementById(name);
-    clockType.style.display = 'block';
-}
-
-//Getting buttons
-const clockBtn = document.getElementById('clock-btn');
-const timerBtn = document.getElementById('timer-btn');
-const stopwatchBtn = document.getElementById('stopwatch-btn');
-const pomodoroBtn = document.getElementById('pomodoro-btn');
-//Setting functionality to the buttons
-clockBtn.addEventListener('click',
-    function() {
-        deactivateAll();
-        activate('clock');
-    }
-);
-timerBtn.addEventListener('click',
-    function() {
-        deactivateAll();
-        activate('timer');
-    }
-);
-stopwatchBtn.addEventListener('click',
-    function() {
-        deactivateAll();
-        activate('stopwatch');
-    }
-);
-pomodoroBtn.addEventListener('click',
-    function() {
-        deactivateAll();
-        activate('pomodoro');
-    }
-);
-/*
     App logic.
     Logic for clock, timer, stopwatch and pomodoro timer
 */
@@ -58,7 +12,7 @@ const timerDiv = document.getElementById('timer-item')
 let timerRunning = false;
 let stopwatchRunning = false;
 //Custom app values
-let startDate = null;
+let timerStartDate = null;
 let lastTimerTime = 0;
 let stopwatchStartDate = null;
 let stopwatchLength = 300;
@@ -66,7 +20,7 @@ let stopwatchLength = 300;
 document.getElementById('timer-start').addEventListener('click',
     () => {
         timerRunning = true;
-        startDate = new Date();
+        timerStartDate = new Date();
     }
 );
 document.getElementById('timer-stop').addEventListener('click',
@@ -77,7 +31,7 @@ document.getElementById('timer-stop').addEventListener('click',
 document.getElementById('stopwatch-start').addEventListener('click',
     () => {
         stopwatchRunning = true;
-        startDate = new Date();
+        timerStartDate = new Date();
     }
 );
 document.getElementById('stopwatch-stop').addEventListener('click',
@@ -108,7 +62,7 @@ function updateClock(date){;
 function updateTimer(date) {
     let showTimerTime = lastTimerTime;
     if (timerRunning) {
-        showTimerTime = date - startDate;
+        showTimerTime = date - timerStartDate;
         lastTimerTime = showTimerTime;
     }
     //Parse time difference
