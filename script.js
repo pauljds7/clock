@@ -56,9 +56,12 @@ const timerDiv = document.getElementById('timer-item')
 
 //Custom app states
 let timerRunning = false;
+let stopwatchRunning = false;
 //Custom app values
 let startDate = null;
 let lastTimerTime = 0;
+let stopwatchStartDate = null;
+let stopwatchLength = 300;
 //Listeners for custom app buttons
 document.getElementById('timer-start').addEventListener('click',
     () => {
@@ -67,6 +70,17 @@ document.getElementById('timer-start').addEventListener('click',
     }
 );
 document.getElementById('timer-stop').addEventListener('click',
+    () => {
+        timerRunning = false;
+    }
+);
+document.getElementById('stopwatch-start').addEventListener('click',
+    () => {
+        stopwatchRunning = true;
+        startDate = new Date();
+    }
+);
+document.getElementById('stopwatch-stop').addEventListener('click',
     () => {
         timerRunning = false;
     }
@@ -115,14 +129,20 @@ function updateTimer(date) {
 }
 //Update logic for stopwatch app
 function updateStopwatch(date) {
-    
+    let showTimer = stopwatchLength;
+    if (stopwatchRunning) {
+
+    }
 }
+
+//general update that updates all the apps
 function update() {
     //Get current time
     let date = new Date();
 
     updateClock(date);
     updateTimer(date);
+    updateStopwatch(date);
 }
 
 let updateId = setInterval(update, intervalMs);
