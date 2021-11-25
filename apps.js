@@ -12,13 +12,18 @@ const stopWatchDiv = document.getElementById('stopwatch-item')
 //Custom app states
 let timerRunning = false;
 let stopwatchRunning = false;
+let pomodoroRunning = false;
 //Custom app values
 let timerStartDate = null;
 let lastTimerTime = 0;
 let stopwatchStartDate = null;
 const defaultStopwatchVal = 120000
 let stopwatchLength = defaultStopwatchVal;
-//Listeners for custom app buttons
+
+/*
+    Listeners for custom app buttons
+    --------------------------------
+*/
 document.getElementById('timer-start').addEventListener('click',
     () => {
         timerRunning = true;
@@ -77,7 +82,7 @@ document.getElementById('stopwatch-sub-minute').addEventListener('click',
         }
     }
 );
-
+//----------------------------------------
 
 //update functions that updates all the apps
 //Time render function that renders time to specified element
@@ -99,6 +104,7 @@ function renderTime(element, time) {
 }
 
 //Updatel logic for clock
+//Clock uses different time format output, thats why it doesnt use time render function.
 function updateClock(date){
     let val = date.getHours();
     let min = date.getMinutes();
