@@ -117,6 +117,8 @@ document.getElementById('pomodoro-stop').addEventListener('click',
 document.getElementById('pomodoro-reset').addEventListener('click',
     () => {
         pomodoroRunning = false;
+        pomadaroTable.rows[pomodoroCurrentStep].style.backgroundColor = 'var(--main-bg-color)' 
+        pomadaroTable.rows[0].style.backgroundColor = 'var(--second-bg-color)' 
         pomodoroCurrentStep = 0;
         pomodoroCurrentTime = pomodoroCycle[pomodoroCurrentStep];
     }
@@ -146,6 +148,18 @@ function renderTime(element, time) {
     element.innerText = timerTime;
 }
 
+//Render pomodoro table
+let pomadaroTable = document.getElementById('pomodoro-table');
+function renderPomodoroTable(){
+    for (let i = 0; i < pomodoroCycle.length; i++) {
+        let newRow = pomadaroTable.insertRow(-1);
+        newRow.insertCell(0).innerText = (i%2 == 0) ? 'Work' : 'Rest';
+        newRow.insertCell(1).innerText = pomodoroCycle[i] / 60000;
+        if (i == pomodoroCurrentStep) {
+            newRow.style.backgroundColor = 'var(--second-bg-color)';
+        }
+    }
+}
 //Updatel logic for clock
 //Clock uses different time format output, thats why it doesnt use time render function.
 function updateClock(date){
@@ -198,6 +212,9 @@ function updatePomodoro(date) {
             //Play sound after each stage completion
             let audio = new Audio('intro-logo.wav');
             audio.play();
+            //Update pomodoro table
+            pomadaroTable.rows[(pomodoroCurrentStep - 1) % pomodoroCycle.length].style.backgroundColor = 'var(--main-bg-color)' 
+            pomadaroTable.rows[pomodoroCurrentStep].style.backgroundColor = 'var(--second-bg-color)' 
         }
     }
     renderTime(pomodoroDiv, pomodoroCurrentTime)
@@ -213,5 +230,7 @@ function update() {
     updateStopwatch(date);
     updatePomodoro(date);
 }
+//Populate pomadoro table
+renderPomodoroTable();
 //Launch update
 let updateId = setInterval(update, intervalMs);

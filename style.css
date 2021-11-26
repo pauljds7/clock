@@ -107,3 +107,17 @@ body {
 
     margin-top: 2rem;
 }
+
+#pomodoro-table-div {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    margin-top: 1.6rem;
+}
+
+#pomodoro-table {
+    width: 30vw;
+    border: 1px solid var(--outline-color);
+    border-collapse: collapse;
+}
