@@ -24,15 +24,18 @@ const defaultStopwatchVal = 120000
 let stopwatchLength = defaultStopwatchVal;
 //Pomodoro timer
 //Cycle of work, rest, work, rest, work, rest, work, long rest
+const workTime = 25 * 60 * 1000;
+const restTime1 = 5 * 60 * 1000;
+const restTime2 = 50 * 60 * 1000;
 const pomodoroCycle = [
-    10000,
-    5000,
-    10000,
-    5000,
-    10000,
-    5000,
-    10000,
-    20000
+    workTime,
+    restTime1,
+    workTime,
+    restTime1,
+    workTime,
+    restTime1,
+    workTime,
+    restTime2
 ];
 let pomodoroCurrentStep = 0;
 let pomodoroCurrentTime = pomodoroCycle[pomodoroCurrentStep];
@@ -128,7 +131,11 @@ function renderTime(element, time) {
     let timerHours = Math.floor(timerMinutes/60);
     let timerTime = null;
     let parsedTimerSeconds = (timerSeconds % 1 ==0) ? timerSeconds%60 + '.0':((timerSeconds*10)%600)/10;
-    let parsedTimerMinutes = timerMinutes % 60
+    if (timerSeconds%60 <10) {
+        parsedTimerSeconds = '0'+parsedTimerSeconds;
+    }
+    timerMinutes = timerMinutes%60;
+    let parsedTimerMinutes = (timerMinutes  < 10) ? '0' + timerMinutes : timerMinutes;
     if (timerHours ==0  && timerMinutes == 0) {
         timerTime = '00:' + parsedTimerSeconds;
     } else if (timerHours == 0) {
